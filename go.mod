@@ -1,4 +1,4 @@
-module center_service_proto
+module gitee.com/zw2582/center_service_proto
 
 go 1.13
 
