@@ -1,0 +1,63 @@
+syntax = "proto3";
+
+package app;
+option go_package = "/app";
+
+message AppRequest {
+  string name = 1;
+  string wxAppKey = 2;
+  string wxAppSecret = 3;
+}
+
+message AppEditRequest {
+  int64 id = 1;
+  string name = 2;
+  string wxAppKey = 3;
+  string wxAppSecret = 4;
+}
+
+message AppReply {
+  int64 id = 1;
+  string name = 2;
+  string key = 3;
+  string wxAppKey = 4;
+  string wxAppSecret = 5;
+}
+
+message AppIdRequest{
+  int64 int = 1;
+}
+
+service AppService {
+  //新增应用信息
+  rpc AppAdd(AppRequest) returns (AppReply) {}
+
+  //修改应用信息
+  rpc AppEdit(AppEditRequest) returns (AppReply) {}
+
+  //获取应用信息
+  rpc AppGet(AppIdRequest) returns (AppReply) {}
+
+  //应用列表
+  rpc AppPageList(AppPageReq) returns (AppPageRep) {}
+}
+
+message AppPageReq {
+  int64 page = 1;
+  int64 size = 2;
+}
+
+message AppPageData {
+  int64 id = 1;
+  string name = 2;
+  string key = 3;
+  string wxAppKey = 4;
+  string wxAppSecret = 5;
+  string createdAt = 6;
+  string updatedAt = 7;
+}
+
+message AppPageRep {
+  int64 total = 1;
+  repeated AppPageData data = 2;
+}

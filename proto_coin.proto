@@ -1,0 +1,164 @@
+syntax = "proto3";
+
+package coin;
+option go_package = "/coin";
+
+service CoinService {
+
+  //金币余额
+  rpc CoinGet(CoinGetReq) returns (CoinGetRep) {}
+
+  //增加金币
+  rpc CoinIncr(CoinIncrReq) returns (CoinIncrRep) {}
+
+  //减少金币
+  rpc CoinDecr(CoinDecrReq) returns (CoinIncrRep) {}
+
+  //用户最近7天金币变动列表
+  rpc CoinRecordListLast7Day(Coin7DayReq) returns (Coin7DayRep) {}
+
+  //金币提现申请
+  rpc CoinWithDrawApply(CoinWithDrawApplyReq) returns (CoinWithDrawApplyRep) {}
+
+  //用户提现列表
+  rpc CoinWithDrawList(CoinWithDrawListReq) returns (CoinWithDrawListRep) {}
+
+  //提现撤销
+  rpc CoinWithDrawRevoke(CoinWithDrawRevokeReq) returns (CoinWithDrawRevokeRep) {}
+
+  //提现分页列表
+  rpc CoinWithDrawPageList(CoinWithDrawPageListReq) returns (CoinWithDrawPageListRep) {}
+
+  //提现同意
+  rpc CoinWithDrawAgree(CoinWithDrawAgreeReq) returns (CoinWithDrawAgreeRep) {}
+
+  //提现拒绝
+  rpc CoinWithDrawRefuse(CoinWithDrawRefuseReq) returns (CoinWithDrawRefuseRep) {}
+
+  //提现转账记录
+  rpc CoinTransferList(CoinTransferListReq) returns (CoinTransferListRep) {}
+
+}
+
+message CoinGetReq {
+  int64 appId = 1;
+  int64 userId = 2;
+}
+
+message CoinGetRep {
+  int64 amount = 1;
+  int64 totalAmount = 2;
+}
+
+message CoinIncrReq {
+  int64 appId = 1;
+  int64 userId = 2;
+  int64 amount = 3;
+  string desc = 4;
+}
+
+message CoinIncrRep {
+  int64 amount = 1;
+}
+
+message CoinDecrReq {
+  int64 appId = 1;
+  int64 userId = 2;
+  int64 amount = 3;
+  string desc = 4;
+}
+
+message Coin7DayReq {
+  int64 appId = 1;
+  int64 userId = 2;
+  int64 lastId = 3;
+}
+
+message Coin7DayData {
+  int64 appId = 1;
+  int64 userId = 2;
+  int64 amount = 3;
+  string desc = 4;
+  string createdAt = 5;
+}
+
+message Coin7DayRep {
+  repeated Coin7DayData data = 1;
+}
+
+message CoinWithDrawApplyReq {
+  int64 appId = 1;
+  int64 userId = 2;
+  int64 amount = 3;
+}
+
+message CoinWithDrawApplyRep {
+
+}
+
+message CoinWithDrawListReq {
+  int64 appId = 1;
+  int64 userId = 2;
+}
+
+message CoinWithDrawListData {
+  int64 id = 1;
+  int64 appId = 2;
+  int64 userId = 3;
+  int64 amount = 4;
+  string status = 5; //提现状态
+  string createdAt = 6;
+  string desc = 7; //备注
+}
+
+message CoinWithDrawListRep {
+  repeated CoinWithDrawListData data = 1;
+}
+
+message CoinWithDrawRevokeReq {
+  int64 appId = 1;
+  int64 userId = 2;
+  int64 withDrawId = 3;
+}
+
+message CoinWithDrawRevokeRep {}
+
+message CoinWithDrawPageListReq {
+  int64 appId = 1;
+  int64 page = 2;
+  int64 size = 3;
+}
+
+message CoinWithDrawPageListRep {
+  repeated CoinWithDrawListData data = 1;
+}
+
+message CoinWithDrawAgreeReq {
+  int64 appId = 1;
+  int64 withDrawId = 2;
+  string desc = 3;
+}
+
+message CoinWithDrawAgreeRep{}
+
+message CoinWithDrawRefuseReq {
+  int64 appId = 1;
+  int64 withDrawId = 2;
+  string desc = 3;
+}
+
+message CoinWithDrawRefuseRep{}
+
+message CoinTransferListReq {
+  int64 appId = 1;
+  int64 withDrawId = 2;
+}
+
+message CoinTransferListData {
+  int64 id = 1;
+  string result = 2;
+}
+
+message CoinTransferListRep {
+  repeated CoinTransferListData data = 1;
+}

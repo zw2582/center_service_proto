@@ -1,0 +1,71 @@
+syntax = "proto3";
+
+package push;
+option go_package = "/push";
+
+//本服务只针对个推，因为uniapp已经兼容了个推，而个推已经兼容所有厂家，没有必要自己兼容了
+service PushService {
+
+  //应用通道配置
+  rpc PushVendorSave(PushVendorSaveReq) returns (PushVendorSaveRep) {}
+
+  //cid上报
+  rpc CidUpload(CidUploadReq) returns (CidUploadRep) {}
+
+  //单或批量推送
+  rpc PushToUdi(PushToUdiReq) returns (PushToUdiRep) {}
+
+  //单或批量透传
+  rpc TranToUdi(TranToUdiReq) returns (TranToUdiRep) {}
+
+  //定时推送策略配置
+
+  //定时推送策略修改
+
+  //定时推送文案配置
+
+  //设备分页列表
+
+  //推送策略分页列表
+
+  //推送文案分页列表
+
+  //推送记录分页列表
+
+  //推送记录通道列表
+}
+
+message PushVendorSaveReq {
+  int64 appId = 1;
+  string vendor = 2;
+  string vendorAppId = 3;
+  string vendorAppKey = 4;
+  string vendorAppSecret = 5;
+  string vendorAppMasterSecret = 6;
+}
+
+message PushVendorSaveRep {
+  int64 id = 1;
+}
+
+message CidUploadReq {
+  int64 appId = 1;
+  string udi = 2;
+  string cid = 3;
+}
+
+message CidUploadRep {}
+
+message PushToUdiReq {
+  int64 appId = 1;
+  repeated string udi = 2;
+}
+
+message PushToUdiRep {}
+
+message TranToUdiReq {
+  int64 appId = 1;
+  repeated string udi = 2;
+}
+
+message TranToUdiRep {}

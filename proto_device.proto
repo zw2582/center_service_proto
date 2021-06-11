@@ -1,0 +1,76 @@
+syntax = "proto3";
+
+package device;
+option go_package = "/device";
+
+service DeviceService {
+  //设备信息上报
+  rpc DeviceUpload(DeviceUploadRep) returns (DeviceUploadRep) {}
+
+  //根据udi查询设备
+  rpc DeviceGetByUdi(DeviceUdiGetReq) returns (DeviceRep) {}
+
+  //根据id查询设备
+  rpc DeviceGet(DeviceIdGetReq) returns (DeviceRep) {}
+
+  //设备列表
+  rpc DevicePageList(DevicePageReq) returns (DevicePageRep) {}
+}
+
+message DeviceUploadReq {
+  int64 appId = 1;
+  string udi = 2;
+  string androidId = 3;
+  string imei = 4;
+  string mac = 5;
+  string idfa = 6;
+  string oaid = 7;
+}
+
+message DeviceUploadRep {
+  string udi = 1;
+}
+
+message DeviceUdiGetReq {
+  int64 appId = 1;
+  string udi = 2;
+}
+
+message DeviceIdGetReq {
+  int64 appId = 1;
+  int64 id = 2;
+}
+
+message DeviceRep {
+  int64 appId = 1;
+  int64 id = 2;
+  string udi = 4;
+  string androidId = 5;
+  string imei = 6;
+  string mac = 7;
+  string idfa = 8;
+  string oaid = 9;
+}
+
+message DevicePageReq {
+  int64 appId = 1;
+  int64 page = 2;
+  int64 size = 3;
+}
+
+message DevicePageData {
+  int64 id = 2;
+  string udi = 4;
+  string androidId = 5;
+  string imei = 6;
+  string mac = 7;
+  string idfa = 8;
+  string oaid = 9;
+  int64 activeStatus = 10; //激活状态
+  int64 secondStayStatus = 11; //次留状态
+}
+
+message DevicePageRep {
+  int64 total = 1;
+  repeated DevicePageData data = 2;
+}
